@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Calendrier Billetterie</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <script type="text/javascript" src="crypto-js.js"></script>
+  <script type="text/javascript" src="crypto-wrapper.js"></script>
+  <script type="text/javascript" src="calendar-url.js"></script>
+  <script type="text/javascript" src="base.js"></script>
+  <script type="text/javascript">
+    function decryptIdAndGoToCalendar()
+    {
+      const encryptedCalendarId = getValue('encryptedCalendarId');
+      const password = getValue('password');
+      const decryptedCalendarId = decrypt(encryptedCalendarId, password);
+      if (decryptedCalendarId) {
+        const calendarURL = getCalendarURL(decryptedCalendarId);
+        goTo(calendarURL);
+      }
+    }
+  </script>
+</head>
+<body>
+<form onsubmit="decryptIdAndGoToCalendar(); return false;">
+  <input id="encryptedCalendarId" type="hidden" value="U2FsdGVkX1+uqUuCScEEdypxAv50J8HFKYUWiqNwamCzk7J7vS7Hw9b0cnfRiNmhA3+/0+VJNIAxrOQUzVm9wFMxg65EXVMkUIzdSXAReMeAHPHp6W/O0hFh1KnxGosf">
+  <input id="password" type="password">
+  <input type="submit" value="Go!">
+</form>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Calendrier Billetterie</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script type="text/javascript" src="crypto-js.js"></script>
+    <script type="text/javascript" src="crypto-wrapper.js"></script>
+    <script type="text/javascript" src="calendar-url.js"></script>
+    <script type="text/javascript" src="base.js"></script>
+    <script type="text/javascript">
+      function encryptCalendarId()
+      {
+        const calendarId = getValue('calendarId');
+        const password = getValue('password');
+        const encryptedCalendarId = encrypt(calendarId, password);
+        setValue('encryptedCalendarId', encryptedCalendarId);
+      }
+
+      function decryptCalendarId()
+      {
+        const encryptedCalendarId = getValue('encryptedCalendarId');
+        const password = getValue('password');
+        const decryptedCalendarId = decrypt(encryptedCalendarId, password);
+        setValue('decryptedCalendarId', decryptedCalendarId);
+      }
+
+      function goToCalendar()
+      {
+        const calendarId = getValue('decryptedCalendarId');
+        const calendarURL = getCalendarURL(calendarId);
+        goTo(calendarURL);
+      }
+    </script>
+  </head>
+  <body>
+    <form onsubmit="encryptCalendarId(); return false;">
+      <label>
+        <span>Password:</span>
+        <input id="password" type="text" class="large">
+      </label>
+      <br>
+      <label>
+        <span>Secret Calendar Id:</span>
+        <input id="calendarId" type="text" class="large">
+      </label>
+      <br>
+      <input type="submit" value="Encrypt">
+    </form>
+    <hr>
+    <form onsubmit="decryptCalendarId(); return false;">
+      <label>
+        <span>Encrypted Calendar Id:</span>
+        <input id="encryptedCalendarId" type="text" class="large">
+      </label>
+      <br>
+      <input type="submit" value="Decrypt">
+      <input id="decryptedCalendarId" type="text" class="large">
+    </form>
+    <hr>
+    <form onsubmit="goToCalendar(); return false;">
+      <input type="submit" value="Open Calendar!">
+    </form>
+  </body>
+</html>
